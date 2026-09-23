@@ -1,0 +1,194 @@
+/* Portfolio overlay — slate studio palette, restrained teal accent */
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: none;
+  padding: clamp(1.25rem, 4vw, 2.75rem);
+  background: linear-gradient(
+    180deg,
+    rgba(8, 11, 16, 0.15) 0%,
+    rgba(8, 11, 16, 0.05) 35%,
+    rgba(8, 11, 16, 0.55) 70%,
+    rgba(8, 11, 16, 0.82) 100%
+  );
+  transition:
+    background 0.55s ease,
+    opacity 0.45s ease;
+}
+
+.hero-overlay--exploring {
+  background: linear-gradient(
+    180deg,
+    rgba(8, 11, 16, 0.05) 0%,
+    rgba(8, 11, 16, 0) 40%,
+    rgba(8, 11, 16, 0.35) 78%,
+    rgba(8, 11, 16, 0.62) 100%
+  );
+}
+
+.hero-overlay--monitor {
+  background: linear-gradient(
+    180deg,
+    rgba(8, 11, 16, 0.02) 0%,
+    rgba(8, 11, 16, 0) 50%,
+    rgba(8, 11, 16, 0.28) 85%,
+    rgba(8, 11, 16, 0.55) 100%
+  );
+}
+
+.hero-overlay--monitor .hero-overlay__brand {
+  opacity: 0.35;
+  transition: opacity 0.4s ease;
+}
+
+.hero-overlay__brand {
+  max-width: 36rem;
+  pointer-events: none;
+  animation: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hero-overlay__eyebrow {
+  margin: 0 0 0.65rem;
+  font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7a9aab;
+}
+
+.hero-overlay__name {
+  margin: 0;
+  font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+  font-size: clamp(2.6rem, 7vw, 4.4rem);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: #f3f1ec;
+}
+
+.hero-overlay__title {
+  margin: 0.75rem 0 0;
+  font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: #c5cdd6;
+}
+
+.hero-overlay__meta {
+  margin: 0.4rem 0 0;
+  font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  font-size: 0.9rem;
+  color: #8a96a3;
+}
+
+.hero-overlay__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+  pointer-events: auto;
+  animation: hero-rise 1s 0.12s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.btn {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.55rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn--primary {
+  background: #dce8ef;
+  color: #0d1218;
+  border-color: #dce8ef;
+}
+
+.btn--primary:hover {
+  background: #f0f6fa;
+  border-color: #f0f6fa;
+}
+
+.btn--ghost {
+  background: rgba(18, 24, 32, 0.55);
+  color: #d5dde6;
+  border-color: rgba(150, 175, 195, 0.35);
+  backdrop-filter: blur(8px);
+}
+
+.btn--ghost:hover {
+  border-color: rgba(180, 210, 225, 0.65);
+  color: #f2f6fa;
+  background: rgba(24, 32, 42, 0.7);
+}
+
+.hero-overlay__hint {
+  margin: 0.9rem 0 0;
+  font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: #7d8a97;
+  animation: hero-fade 0.6s ease both;
+}
+
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero-overlay {
+    justify-content: flex-end;
+    padding-bottom: 1.5rem;
+  }
+
+  .hero-overlay__actions {
+    width: 100%;
+  }
+
+  .btn {
+    flex: 1 1 calc(50% - 0.65rem);
+    min-width: calc(50% - 0.65rem);
+  }
+}

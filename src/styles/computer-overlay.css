@@ -1,0 +1,62 @@
+/* Fullscreen clickable Mac/iPad computer UI (not WebGL Html) */
+
+.computer-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 3vw, 1.5rem);
+  pointer-events: auto;
+}
+
+.computer-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: rgba(4, 8, 14, 0.55);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+}
+
+.computer-overlay__frame {
+  position: relative;
+  z-index: 1;
+  width: min(960px, 96vw);
+  height: min(540px, 78dvh);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.12);
+  animation: computer-overlay-in 0.35s ease;
+}
+
+.computer-overlay__frame .os {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+@keyframes computer-overlay-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .computer-overlay__frame {
+    height: min(640px, 85dvh);
+  }
+
+  .computer-overlay__frame .os-home__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

@@ -1,0 +1,6 @@
+export { Desk } from './Desk'
+export { Monitor } from './Monitor'
+export { DeskAccessories } from './DeskAccessories'
+export { Lighting } from './Lighting'
+export { Workspace } from './Workspace'
+export { CameraRig } from './CameraRig'

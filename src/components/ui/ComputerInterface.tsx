@@ -29,14 +29,11 @@ export function ComputerInterface({
     if (!interactive) return
 
     if (app.kind === 'external' && app.getHref) {
-      const href = app.getHref()
-      window.open(href, '_blank', 'noopener,noreferrer')
+      window.open(app.getHref(), '_blank', 'noopener,noreferrer')
       return
     }
 
-    if (app.section) {
-      onNavigate(app.section)
-    }
+    if (app.section) onNavigate(app.section)
   }
 
   return (
@@ -49,35 +46,31 @@ export function ComputerInterface({
           <button
             type="button"
             className="os__apple"
-            aria-label="Close computer view"
+            aria-label="Close computer"
             onClick={onClose}
             disabled={!interactive}
-            title="Close computer"
+            title="Close"
           >
-            ●
+            
           </button>
           <span className="os__menubar-app">
-            {isDesktop ? 'Finder' : (openApp?.label ?? 'RahulOS')}
+            {isDesktop ? 'Finder' : (openApp?.label ?? 'App')}
           </span>
         </div>
         <div className="os__menubar-right">
-          <span className="os__menubar-user">{portfolio.personal.name}</span>
-          <span className="os__menubar-clock">Local</span>
+          <span className="os__menubar-clock">
+            {portfolio.personal.name.split(' ')[0]}
+          </span>
         </div>
       </header>
 
       <div className="os__desktop">
-        {isDesktop ? (
-          <HomeDesktop
-            interactive={interactive}
-            onLaunch={launchApp}
-            personalName={portfolio.personal.name}
-            personalTitle={portfolio.personal.title}
-          />
-        ) : (
+        {/* Desktop icons always visible underneath */}
+        <HomeDesktop interactive={interactive} onLaunch={launchApp} />
+
+        {!isDesktop && openApp && (
           <AppWindow
-            title={openApp?.label ?? 'App'}
-            tint={openApp?.tint}
+            title={openApp.label}
             onClose={() => onNavigate('home')}
             interactive={interactive}
           >
@@ -102,25 +95,15 @@ export function ComputerInterface({
 function HomeDesktop({
   interactive,
   onLaunch,
-  personalName,
-  personalTitle,
 }: {
   interactive: boolean
   onLaunch: (app: DesktopApp) => void
-  personalName: string
-  personalTitle: string
 }) {
   const homeApps = desktopApps.filter((app) => app.showOnHome)
 
   return (
     <div className="os-home">
-      <div className="os-home__hero">
-        <p className="os-home__eyebrow">RahulOS · Click any icon</p>
-        <h2 className="os-home__name">{personalName}</h2>
-        <p className="os-home__title">{personalTitle}</p>
-      </div>
-
-      <div className="os-home__grid" role="list" aria-label="Applications">
+      <div className="os-home__icons" role="list" aria-label="Desktop icons">
         {homeApps.map((app) => (
           <AppIcon
             key={app.id}
@@ -195,17 +178,11 @@ function AppIcon({
         e.stopPropagation()
         onLaunch()
       }}
-      title={
-        app.kind === 'external'
-          ? `Open ${app.label} in a new tab`
-          : `Open ${app.label}`
-      }
+      title={app.label}
     >
       <span
         className="os-icon__tile"
-        style={{
-          background: `linear-gradient(145deg, ${c1}, ${c2})`,
-        }}
+        style={{ background: `linear-gradient(160deg, ${c1}, ${c2})` }}
       >
         <span className="os-icon__glyph">{app.glyph}</span>
       </span>
@@ -217,13 +194,11 @@ function AppIcon({
 
 function AppWindow({
   title,
-  tint,
   onClose,
   interactive,
   children,
 }: {
   title: string
-  tint?: [string, string]
   onClose: () => void
   interactive: boolean
   children: ReactNode
@@ -235,7 +210,7 @@ function AppWindow({
           <button
             type="button"
             className="os-window__dot os-window__dot--close"
-            aria-label="Back to desktop"
+            aria-label="Close window"
             onClick={onClose}
             disabled={!interactive}
           />
@@ -243,15 +218,6 @@ function AppWindow({
           <span className="os-window__dot os-window__dot--max" />
         </div>
         <p className="os-window__title">{title}</p>
-        <span
-          className="os-window__accent"
-          style={{
-            background: tint
-              ? `linear-gradient(90deg, ${tint[0]}, ${tint[1]})`
-              : undefined,
-          }}
-          aria-hidden
-        />
       </header>
       <div className="os-window__body">{children}</div>
     </div>
@@ -280,9 +246,6 @@ function SectionView({
             <div>
               <p className="os-panel__eyebrow">Documents</p>
               <h2 className="os-panel__title">Resume.pdf</h2>
-              <p className="os-panel__text">
-                Click Download or Open — this is the authoritative resume PDF.
-              </p>
             </div>
             <div className="os-actions">
               <a
@@ -298,13 +261,13 @@ function SectionView({
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Open in Tab
+                Open
               </a>
             </div>
           </div>
           <div className="os-resume-preview">
             <iframe
-              title="Rahul Dhiman Resume PDF"
+              title="Resume PDF"
               src={resumeUrl}
               className="os-resume-preview__frame"
             />
@@ -324,7 +287,7 @@ function SectionView({
     case 'education':
       return (
         <div className="os-panel">
-          <p className="os-panel__eyebrow">Background</p>
+          <p className="os-panel__eyebrow">Education</p>
           <h2 className="os-panel__title">Education</h2>
           <ul className="os-list">
             {education.map((item) => (
@@ -345,7 +308,7 @@ function SectionView({
     case 'certifications':
       return (
         <div className="os-panel">
-          <p className="os-panel__eyebrow">Credentials</p>
+          <p className="os-panel__eyebrow">Certifications</p>
           <h2 className="os-panel__title">Certifications</h2>
           <ul className="os-list">
             {certifications.map((cert) => (
@@ -360,7 +323,7 @@ function SectionView({
     case 'contact':
       return (
         <div className="os-panel">
-          <p className="os-panel__eyebrow">Reach out</p>
+          <p className="os-panel__eyebrow">Contact</p>
           <h2 className="os-panel__title">Contact</h2>
           <ul className="os-list">
             <li className="os-list__item">

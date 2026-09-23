@@ -103,7 +103,7 @@ export function Monitor({
             <div className="os__menubar">
               <div className="os__menubar-left">
                 <span className="os__apple" aria-hidden>
-                  ●
+                  
                 </span>
                 <span className="os__menubar-app">Finder</span>
               </div>
@@ -113,14 +113,7 @@ export function Monitor({
             </div>
             <div className="os__desktop">
               <div className="os-home">
-                <div className="os-home__hero">
-                  <p className="os-home__eyebrow">RahulOS</p>
-                  <h2 className="os-home__name">Click to open</h2>
-                  <p className="os-home__title">
-                    Resume · GitHub · LinkedIn · Skills
-                  </p>
-                </div>
-                <div className="os-home__grid">
+                <div className="os-home__icons">
                   {previewIcons.map((app) => {
                     const [c1, c2] = app.tint
                     return (
@@ -128,7 +121,7 @@ export function Monitor({
                         <span
                           className="os-icon__tile"
                           style={{
-                            background: `linear-gradient(145deg, ${c1}, ${c2})`,
+                            background: `linear-gradient(160deg, ${c1}, ${c2})`,
                           }}
                         >
                           <span className="os-icon__glyph">{app.glyph}</span>

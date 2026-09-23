@@ -15,7 +15,6 @@ export type DesktopAppId =
   | ComputerSectionId
   | 'github'
   | 'linkedin'
-  | 'mail'
 
 export type DesktopAppKind = 'desktop' | 'window' | 'external'
 
@@ -137,16 +136,6 @@ export const desktopApps: DesktopApp[] = [
     tint: ['#0a66c2', '#004182'],
     kind: 'external',
     getHref: () => portfolio.social.linkedin,
-    showOnHome: true,
-    showInDock: true,
-  },
-  {
-    id: 'mail',
-    label: 'Mail',
-    glyph: '✉',
-    tint: ['#5ac8fa', '#0a84ff'],
-    kind: 'external',
-    getHref: () => `mailto:${portfolio.personal.email}`,
     showOnHome: true,
     showInDock: true,
   },

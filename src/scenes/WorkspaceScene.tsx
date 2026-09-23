@@ -4,30 +4,39 @@ import { AdaptiveDpr, AdaptiveEvents } from '@react-three/drei'
 import { Workspace } from '../components/3d/Workspace'
 import { CameraRig } from '../components/3d/CameraRig'
 import { useMediaQuery } from '../hooks/useMediaQuery'
+import type { CharacterApi } from '../hooks/useCharacter'
 
 type WorkspaceSceneProps = {
   isExploring: boolean
   isMonitorFocused: boolean
-  onMonitorFocus: () => void
+  character: CharacterApi
+  highlight: 'none' | 'chair' | 'bed' | 'mac'
+  onFloorClick: (x: number, z: number) => void
+  onChairClick: () => void
+  onBedClick: () => void
+  onMacClick: () => void
+  onArrivedUseMac: () => void
 }
 
 export function WorkspaceScene({
   isExploring,
   isMonitorFocused,
-  onMonitorFocus,
+  character,
+  highlight,
+  onFloorClick,
+  onChairClick,
+  onBedClick,
+  onMacClick,
+  onArrivedUseMac,
 }: WorkspaceSceneProps) {
   const isMobile = useMediaQuery('(max-width: 768px)')
-  const isTablet = useMediaQuery('(max-width: 1024px)')
 
   const camera = useMemo(() => {
     if (isMobile) {
-      return { position: [0.15, 1.55, 2.6] as [number, number, number], fov: 42 }
+      return { position: [2.4, 2.4, 3.6] as [number, number, number], fov: 42 }
     }
-    if (isTablet) {
-      return { position: [0.2, 1.45, 2.35] as [number, number, number], fov: 40 }
-    }
-    return { position: [0.35, 1.35, 2.15] as [number, number, number], fov: 38 }
-  }, [isMobile, isTablet])
+    return { position: [2.8, 2.2, 3.4] as [number, number, number], fov: 40 }
+  }, [isMobile])
 
   return (
     <Canvas
@@ -38,7 +47,7 @@ export function WorkspaceScene({
         position: camera.position,
         fov: camera.fov,
         near: 0.1,
-        far: 40,
+        far: 50,
       }}
       gl={{
         antialias: !isMobile,
@@ -47,14 +56,20 @@ export function WorkspaceScene({
         stencil: false,
       }}
       onCreated={({ gl }) => {
-        gl.setClearColor('#0b0e12')
+        gl.setClearColor('#1a1512')
       }}
     >
       <Suspense fallback={null}>
         <Workspace
           isExploring={isExploring}
           isMonitorFocused={isMonitorFocused}
-          onMonitorFocus={onMonitorFocus}
+          character={character}
+          highlight={highlight}
+          onFloorClick={onFloorClick}
+          onChairClick={onChairClick}
+          onBedClick={onBedClick}
+          onMacClick={onMacClick}
+          onArrivedUseMac={onArrivedUseMac}
         />
         <AdaptiveDpr pixelated />
         <AdaptiveEvents />

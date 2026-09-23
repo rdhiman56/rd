@@ -67,6 +67,8 @@ export interface Language {
   name: string
 }
 
+export type Triplet = [number, number, number]
+
 export interface PortfolioData {
   personal: PersonalInfo
   social: SocialLinks

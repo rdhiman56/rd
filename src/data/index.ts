@@ -8,6 +8,8 @@ export type {
   DesktopAppKind,
 } from './computerNav'
 export { publicAsset, getResumeUrl } from './paths'
+export { roomLayout } from './roomLayout'
+export type { HotspotId } from './roomLayout'
 export {
   careerTimelineStages,
   techProgressionMarkers,

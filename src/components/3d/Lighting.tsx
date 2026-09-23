@@ -3,59 +3,53 @@ import { useMediaQuery } from '../../hooks/useMediaQuery'
 
 type LightingProps = {
   isExploring?: boolean
+  cozy?: boolean
 }
 
-export function Lighting({ isExploring = false }: LightingProps) {
+export function Lighting({ isExploring = false, cozy = false }: LightingProps) {
   const isMobile = useMediaQuery('(max-width: 768px)')
   const shadowMap = isMobile ? 512 : 2048
 
   return (
     <>
-      <color attach="background" args={['#0b0e12']} />
-      <fog attach="fog" args={['#0b0e12', 8, 18]} />
+      <color attach="background" args={[cozy ? '#1a1512' : '#0b0e12']} />
+      <fog attach="fog" args={[cozy ? '#1a1512' : '#0b0e12', 7, 16]} />
 
-      <ambientLight intensity={0.22} color="#c8d4e0" />
+      <ambientLight intensity={cozy ? 0.32 : 0.22} color="#f0e6d8" />
 
-      {/* Soft key from above-right — studio feel, not game lighting */}
       <directionalLight
-        position={[3.5, 6, 2.5]}
-        intensity={isExploring ? 1.05 : 0.85}
-        color="#f2f0eb"
+        position={[3.2, 5.5, 2.2]}
+        intensity={isExploring ? 0.95 : 0.75}
+        color="#fff1df"
         castShadow
         shadow-mapSize-width={shadowMap}
         shadow-mapSize-height={shadowMap}
         shadow-camera-near={1}
-        shadow-camera-far={14}
-        shadow-camera-left={-4}
-        shadow-camera-right={4}
-        shadow-camera-top={4}
-        shadow-camera-bottom={-4}
+        shadow-camera-far={16}
+        shadow-camera-left={-5}
+        shadow-camera-right={5}
+        shadow-camera-top={5}
+        shadow-camera-bottom={-5}
         shadow-bias={-0.00025}
       />
 
-      {/* Cool fill — slight futuristic edge */}
-      <directionalLight
-        position={[-3, 2.5, -1]}
-        intensity={0.28}
-        color="#7a9bb8"
-      />
+      <directionalLight position={[-2.5, 2.2, 1]} intensity={0.22} color="#9bb6c9" />
 
-      {/* Rim / back accent */}
       <pointLight
-        position={[0, 2.2, -2.5]}
-        intensity={0.4}
-        distance={8}
-        color="#4a6d88"
+        position={[0.9, 1.8, -0.5]}
+        intensity={0.35}
+        distance={5}
+        color="#ffd7b0"
       />
 
-      <Environment preset="city" environmentIntensity={0.35} />
+      <Environment preset="apartment" environmentIntensity={cozy ? 0.4 : 0.3} />
 
       <ContactShadows
-        position={[0, 0.001, 0]}
-        opacity={0.55}
-        scale={8}
-        blur={2.4}
-        far={4}
+        position={[0, 0.002, 0]}
+        opacity={0.45}
+        scale={10}
+        blur={2.2}
+        far={5}
         color="#000000"
       />
     </>

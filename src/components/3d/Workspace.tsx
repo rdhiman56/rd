@@ -1,48 +1,75 @@
-import { Desk } from './Desk'
-import { Monitor } from './Monitor'
-import { DeskAccessories } from './DeskAccessories'
+import { Room } from './Room'
+import { Bed } from './Bed'
+import { Chair } from './Chair'
+import { MacSetup } from './MacSetup'
+import { Character } from './Character'
 import { Lighting } from './Lighting'
+import type { CharacterApi } from '../../hooks/useCharacter'
 
 type WorkspaceProps = {
   isExploring?: boolean
   isMonitorFocused: boolean
-  onMonitorFocus: () => void
+  character: CharacterApi
+  highlight: 'none' | 'chair' | 'bed' | 'mac'
+  onFloorClick: (x: number, z: number) => void
+  onChairClick: () => void
+  onBedClick: () => void
+  onMacClick: () => void
+  onArrivedUseMac: () => void
 }
 
 export function Workspace({
   isExploring = false,
   isMonitorFocused,
-  onMonitorFocus,
+  character,
+  highlight,
+  onFloorClick,
+  onChairClick,
+  onBedClick,
+  onMacClick,
+  onArrivedUseMac,
 }: WorkspaceProps) {
   return (
     <group>
-      <Lighting isExploring={isExploring || isMonitorFocused} />
+      <Lighting isExploring={isExploring || isMonitorFocused} cozy />
 
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]} receiveShadow>
-        <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial
-          color="#12151a"
-          roughness={0.92}
-          metalness={0.05}
-        />
+      <Room />
+
+      {/* Clickable floor for walking */}
+      <mesh
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, 0.02, 0.2]}
+        onClick={(e) => {
+          e.stopPropagation()
+          onFloorClick(e.point.x, e.point.z)
+        }}
+        onPointerOver={() => {
+          document.body.style.cursor = 'pointer'
+        }}
+        onPointerOut={() => {
+          document.body.style.cursor = 'auto'
+        }}
+      >
+        <planeGeometry args={[5.8, 4.4]} />
+        <meshBasicMaterial transparent opacity={0} />
       </mesh>
 
-      <mesh position={[0, 2, -3.2]} receiveShadow>
-        <planeGeometry args={[14, 6]} />
-        <meshStandardMaterial
-          color="#151920"
-          roughness={0.95}
-          metalness={0.02}
-        />
-      </mesh>
-
-      <Desk />
-      <Monitor
-        isExploring={isExploring}
-        isFocused={isMonitorFocused}
-        onFocus={onMonitorFocus}
+      <Bed
+        highlighted={highlight === 'bed'}
+        onClick={onBedClick}
       />
-      <DeskAccessories />
+      <Chair
+        highlighted={highlight === 'chair'}
+        occupied={character.pose === 'sitting'}
+        onClick={onChairClick}
+      />
+      <MacSetup
+        highlighted={highlight === 'mac'}
+        active={isMonitorFocused || character.pose === 'sitting'}
+        onClick={onMacClick}
+      />
+
+      <Character api={character} onArrivedUseMac={onArrivedUseMac} />
     </group>
   )
 }

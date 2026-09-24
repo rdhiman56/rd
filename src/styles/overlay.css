@@ -22,28 +22,33 @@
 }
 
 .hero-overlay--exploring {
+  justify-content: flex-start;
   background: linear-gradient(
     180deg,
-    rgba(8, 11, 16, 0.05) 0%,
-    rgba(8, 11, 16, 0) 40%,
-    rgba(8, 11, 16, 0.35) 78%,
-    rgba(8, 11, 16, 0.62) 100%
+    rgba(8, 11, 16, 0.35) 0%,
+    rgba(8, 11, 16, 0.08) 28%,
+    rgba(8, 11, 16, 0) 55%,
+    rgba(8, 11, 16, 0) 100%
   );
+  padding-top: clamp(0.75rem, 2vw, 1.25rem);
+}
+
+.hero-overlay--exploring .hero-overlay__brand {
+  opacity: 0.55;
+  max-width: 20rem;
+}
+
+.hero-overlay--exploring .hero-overlay__name {
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+}
+
+.hero-overlay--exploring .hero-overlay__actions {
+  margin-top: 0.65rem;
 }
 
 .hero-overlay--monitor {
-  background: linear-gradient(
-    180deg,
-    rgba(8, 11, 16, 0.02) 0%,
-    rgba(8, 11, 16, 0) 50%,
-    rgba(8, 11, 16, 0.28) 85%,
-    rgba(8, 11, 16, 0.55) 100%
-  );
-}
-
-.hero-overlay--monitor .hero-overlay__brand {
-  opacity: 0.35;
-  transition: opacity 0.4s ease;
+  background: transparent;
+  padding: 0;
 }
 
 .hero-overlay__brand {

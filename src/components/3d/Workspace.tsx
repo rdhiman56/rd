@@ -56,6 +56,7 @@ export function Workspace({
 
       <Bed
         highlighted={highlight === 'bed'}
+        occupied={character.pose === 'sleeping'}
         onClick={onBedClick}
       />
       <Chair

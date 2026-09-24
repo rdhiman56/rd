@@ -99,11 +99,19 @@ export function MacSetup({ highlighted = false, active = false, onClick }: MacSe
         color="#7ec8e8"
       />
 
-      <Html position={[0, 1.45, 0]} center distanceFactor={6} style={{ pointerEvents: 'none' }}>
-        <div className={`hotspot-label ${highlighted || active ? 'is-hot' : ''}`}>
-          Mac · Work
-        </div>
-      </Html>
+      {!active && (
+        <Html
+          position={[0, 1.35, 0.05]}
+          center
+          distanceFactor={10}
+          style={{ pointerEvents: 'none' }}
+          zIndexRange={[10, 0]}
+        >
+          <div className={`hotspot-label ${highlighted ? 'is-hot' : ''}`}>
+            Mac · Work
+          </div>
+        </Html>
+      )}
 
       <mesh position={[0, 0.95, 0]} visible={false}>
         <boxGeometry args={[1.2, 1.2, 0.8]} />
